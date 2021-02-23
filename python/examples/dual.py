@@ -4,6 +4,8 @@
 # Direct port of the Arduino NeoPixel library strandtest example.  Showcases
 # various animations on a strip of NeoPixels.
 import time
+import random
+import sys
 
 from neopixel import *
 
@@ -24,6 +26,19 @@ def colorWipe(strip, color, wait_ms=50):
 		strip.setPixelColor(i, color)
 		strip.show()
 		time.sleep(wait_ms/1000.0)
+
+def dualWipe(strip, color1, color2, wait_ms=50):
+	"""Wipe color across display a pixel at a time."""
+	for i in range(strip.numPixels()):
+		half = strip.numPixels()/2
+		if i < half:
+			strip.setPixelColor(i, color1)
+			strip.setPixelColor(i + half, color2)
+		else:
+			strip.setPixelColor(i, color1)
+			strip.setPixelColor(i - half, color2)
+		strip.show()
+		# time.sleep(wait_ms/1000.0)
 
 def theaterChase(strip, color, wait_ms=50, iterations=10):
 	"""Movie theater light style chaser animation."""
@@ -85,14 +100,10 @@ if __name__ == '__main__':
 	print ('Press Ctrl-C to quit.')
 	while True:
 		# Color wipe animations.
-		colorWipe(strip, Color(255, 0, 0))  # Red wipe
-		colorWipe(strip, Color(0, 255, 0))  # Blue wipe
-		colorWipe(strip, Color(0, 0, 255))  # Green wipe
-		# Theater chase animations.
-		theaterChase(strip, Color(127, 127, 127))  # White theater chase
-		theaterChase(strip, Color(127,   0,   0))  # Red theater chase
-		theaterChase(strip, Color(  0,   0, 127))  # Blue theater chase
-		# Rainbow animations.
-		rainbow(strip)
-		rainbowCycle(strip)
-		theaterChaseRainbow(strip)
+		a = int(float(sys.argv[1]))
+		b = int(float(sys.argv[2]))
+		c = int(float(sys.argv[3]))	
+		d = int(float(sys.argv[4]))
+		e = int(float(sys.argv[5]))
+		f = int(float(sys.argv[6]))
+		dualWipe(strip, Color(a,b,c), Color(d,e,f))  # Red wipe

@@ -4,6 +4,7 @@
 # Direct port of the Arduino NeoPixel library strandtest example.  Showcases
 # various animations on a strip of NeoPixels.
 import time
+import random
 
 from neopixel import *
 
@@ -23,7 +24,7 @@ def colorWipe(strip, color, wait_ms=50):
 	for i in range(strip.numPixels()):
 		strip.setPixelColor(i, color)
 		strip.show()
-		time.sleep(wait_ms/1000.0)
+	#		time.sleep(wait_ms/1000.0)
 
 def theaterChase(strip, color, wait_ms=50, iterations=10):
 	"""Movie theater light style chaser animation."""
@@ -85,14 +86,7 @@ if __name__ == '__main__':
 	print ('Press Ctrl-C to quit.')
 	while True:
 		# Color wipe animations.
-		colorWipe(strip, Color(255, 0, 0))  # Red wipe
-		colorWipe(strip, Color(0, 255, 0))  # Blue wipe
-		colorWipe(strip, Color(0, 0, 255))  # Green wipe
-		# Theater chase animations.
-		theaterChase(strip, Color(127, 127, 127))  # White theater chase
-		theaterChase(strip, Color(127,   0,   0))  # Red theater chase
-		theaterChase(strip, Color(  0,   0, 127))  # Blue theater chase
-		# Rainbow animations.
-		rainbow(strip)
-		rainbowCycle(strip)
-		theaterChaseRainbow(strip)
+		a = random.randint(0,255)
+		b = random.randint(0,255)
+		c = random.randint(0,255)
+		colorWipe(strip, Color(a, b, c))  # Red wipe

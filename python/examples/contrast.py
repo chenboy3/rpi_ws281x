@@ -4,6 +4,7 @@
 # Direct port of the Arduino NeoPixel library strandtest example.  Showcases
 # various animations on a strip of NeoPixels.
 import time
+import random
 
 from neopixel import *
 
@@ -20,8 +21,24 @@ LED_INVERT     = False   # True to invert the signal (when using NPN transistor 
 # Define functions which animate LEDs in various ways.
 def colorWipe(strip, color, wait_ms=50):
 	"""Wipe color across display a pixel at a time."""
-	for i in range(strip.numPixels()):
+	for i in range(strip.numPixels()/2):
 		strip.setPixelColor(i, color)
+		strip.show()
+		time.sleep(wait_ms/1000.0)
+
+def duoColorWipe(strip, color1, color2, wait_ms=50):
+	"""Wipe color across display from both ends at a time."""
+	for i in range(strip.numPixels()/2):
+		strip.setPixelColor(i, color1)
+		strip.setPixelColor(strip.numPixels() - i, color2)
+		strip.show()
+		time.sleep(wait_ms/1000.0)
+
+def duoReverseColorWipe(strip, color1, color2, wait_ms=50):
+	"""Wipe color across display from both ends at a time."""
+	for i in range(strip.numPixels()/2):
+		strip.setPixelColor(strip.numPixels()/2 + i, color1)
+		strip.setPixelColor(strip.numPixels()/2 - i, color2)
 		strip.show()
 		time.sleep(wait_ms/1000.0)
 
@@ -85,14 +102,15 @@ if __name__ == '__main__':
 	print ('Press Ctrl-C to quit.')
 	while True:
 		# Color wipe animations.
-		colorWipe(strip, Color(255, 0, 0))  # Red wipe
-		colorWipe(strip, Color(0, 255, 0))  # Blue wipe
-		colorWipe(strip, Color(0, 0, 255))  # Green wipe
-		# Theater chase animations.
-		theaterChase(strip, Color(127, 127, 127))  # White theater chase
-		theaterChase(strip, Color(127,   0,   0))  # Red theater chase
-		theaterChase(strip, Color(  0,   0, 127))  # Blue theater chase
-		# Rainbow animations.
-		rainbow(strip)
-		rainbowCycle(strip)
-		theaterChaseRainbow(strip)
+		a = random.randint(0,255)
+		b = random.randint(0,255)
+		c = random.randint(0,255)
+
+		duoColorWipe(strip, Color(a, b, c), Color(255-a,255- b,255-c))  # Red wipe
+
+		d = random.randint(0,255)
+		e = random.randint(0,255)
+		f = random.randint(0,255)
+
+		duoReverseColorWipe(strip, Color(d, e, f), Color(255-d,255- e,255-f))  # Red wipe
+
